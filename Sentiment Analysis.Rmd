@@ -1,0 +1,84 @@
+---
+title: "Sentiment Analysis for Twitter Post"
+
+output: 
+  html_document:
+    toc: true
+    theme: cosmo
+---
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+library(knitr)
+library(dplyr)
+library(kableExtra)
+library(caret)
+library(formattable)
+```
+## Improvement of Vader to FinBert
+FinBERT is a pre-trained NLP model to analyze sentiment of financial text. It is built by further training the BERT language model in the finance domain, using a large financial corpus and thereby fine-tuning it for financial sentiment classification. As a result, we change from original Vader method to FinBert to seek better performance of the sentiment analysis.
+
+### Comparison between Vader and FinBert
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+comparison_BBG<- read.csv('G://.shortcut-targets-by-id/1-0KaiqpvHTFU43kjG92bBw0UEeigKXWT/Jagon/Project 2/comparison_BBG.csv')
+kable(comparison_BBG, "html") %>%
+    kable_styling() %>%
+    scroll_box(height = "500px")
+```
+
+### Difference between Vader and FinBert
+There are 1806 different sentiment results between Vader and FinBert. But we would focus on the opposite sentiment, that is, FinBert is positive while Vader is negative, or vice versa. So in the next part we delve into these two kinds of dataset and evaluate which is more suitable for judging.
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+comparison_BBG_diff <- read.csv('G://.shortcut-targets-by-id/1-0KaiqpvHTFU43kjG92bBw0UEeigKXWT/Jagon/Project 2/comparison_BBG_diff.csv')
+kable(comparison_BBG_diff, "html") %>%
+    kable_styling() %>%
+    scroll_box(height = "500px")
+```
+
+### FinBert Positive ; Vader Negative
+There are 56 sentiment results that FinBert shows positive but Vader shows negative. Among these results, 39 results are correctly classified and 17 are wrongly classified for FinBert.
+
+<div align="center"> *$Accuracy = 0.7$* </div>
+
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+bert_positive_df <- read.csv('G://.shortcut-targets-by-id/1-0KaiqpvHTFU43kjG92bBw0UEeigKXWT/Jagon/Project 2/bert_positive_df.csv')
+kable(bert_positive_df, "html") %>%
+    kable_styling() %>%
+    scroll_box(height = "500px")
+```
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+
+### FinBert Negative ; Vader Positive
+There are 216 sentiment results that FinBert shows negative but Vader shows positive Among these results, 156 results are correctly classified and 60 are wrongly classified for FinBert.
+
+<div align="center"> *$Accuracy = 0.72$* </div>
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+bert_negative_df <- read.csv('G://.shortcut-targets-by-id/1-0KaiqpvHTFU43kjG92bBw0UEeigKXWT/Jagon/Project 2/bert_negative_df.csv')
+kable(bert_negative_df, "html") %>%
+    kable_styling() %>%
+    scroll_box(height = "500px")
+```
+
+## After tuning the number of threads, the efficiency successfully improved.
+
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+SliceNum <- c("FinBert_BBG_results_df_slice1", "FinBert_BBG_results_df_slice2", "FinBert_BBG_results_df_slice3", "FinBert_BBG_results_df_slice4", "FinBert_BBG_results_df_slice5")
+Time_Elapsed <- c("90.35", "90.74", "94.21", "109.32", "110.49")
+
+df <- data.frame(SliceNum, Time_Elapsed)
+formattable(df)
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+```{r message=FALSE, echo=FALSE, warning=FALSE}
+```
+
